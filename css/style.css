@@ -1,0 +1,16 @@
+.radio {
+    display: inline-block;
+    margin: 10px;
+}
+
+input[type='text']{
+    background: lightgray;
+}
+
+input[type='checkbox']{
+    background: orange;
+}
+
+.content, .row {
+    margin: 10px;
+}

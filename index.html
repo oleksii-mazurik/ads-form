@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Ads Form</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="content">
+        <div class="col-md-offset-2 col-md-8">
+            <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="name">  Введите название компании:</label>
+                            <input class="form-control" type="text" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="site-name">Введите адрес рекламируемого сайта:</label>
+                            <input class="form-control" type="text" id="site-name">
+                        </div>
+                        <div class="form-group">
+                            <label>Планируете ли вы использовать контент "для взрослых"?</label>
+                            <div class="panel">
+                                <div class="radio">
+                                    <label>
+                                        <input id="yes" name="radioAdult" value='true' type="radio" data-bind="checked: adultContent">
+                                        Да</label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input id="no" name="radioAdult" value='false' type="radio" data-bind="checked: adultContent" checked>
+                                        Нет</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <ul data-bind="foreach: geo">
+                                <li>
+                                    <input type="checkbox" data-bind="checked: checked">
+                                    <span data-bind="text: country"></span>
+                                    <ul data-bind="foreach: { data: regions, as: 'region' }">
+                                        <li>
+                                            <input type="checkbox" data-bind="checked: region.checked">
+                                            <span data-bind="text: region.name"></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--Все страны-->
+                                    <!--<ul>-->
+                                        <!--<li>-->
+                                            <!--Украина-->
+                                            <!--<ul>-->
+                                                <!--<li>Киевская обл.</li>-->
+                                                <!--<li>Львовская обл.</li>-->
+                                                <!--<li>Донецкая обл.</li>-->
+                                                <!--<li>Николаевская обл.</li>-->
+                                                <!--<li>Крым</li>-->
+                                            <!--</ul>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--Россия-->
+                                            <!--<ul>-->
+                                                <!--<li>Московская обл.</li>-->
+                                                <!--<li>Краснодарский край</li>-->
+                                                <!--<li>Камчатка</li>-->
+                                                <!--<li>Ленинградская обл.</li>-->
+                                            <!--</ul>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--Беларусь-->
+                                            <!--<ul>-->
+                                                <!--<li>Минск</li>-->
+                                                <!--<li>Гомель</li>-->
+                                                <!--<li>Брест</li>-->
+                                            <!--</ul>-->
+                                        <!--</li>-->
+                                    <!--</ul>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        </div>
+                        <div class="form-group">
+                            <label>Выберите пол:</label>
+                            <div class="panel">
+                                <div class="radio">
+                                    <label>
+                                        <input id="any" name="radioSex" value="any" type="radio" checked>
+                                        Любой</label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input id="male" name="radioSex" value="male" type="radio">
+                                        Мужской</label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input id="female" name="radioSex" value="female" type="radio">
+                                        Женский</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Установите суммарный бюджет рекламной компании:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div>
+                            <label>Установите дневной бюджет рекламной компании</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Выберите тематику Вашей рекламной компании:</label> <br/>
+                            <select class="selectpicker">
+                                <option>Недвижимость</option>
+                                <option>Компьютерные игры</option>
+                                <option>Культура и искусство</option>
+                                <option>Мода и стиль</option>
+                                <option>Политика</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Выберите категории сайтов для показа ваших обновлений:</label>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Категория</td>
+                                    <td>Минимальн. Цена</td>
+                                    <td>Рекомендов. Цена</td>
+                                    <td>Установлен. Цена</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Авто/Мото</td>
+                                    <td>0.50 руб.</td>
+                                    <td>0.50 руб.</td>
+                                    <td>0.50 руб.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Бизнес и финансы</td>
+                                    <td>0.50 руб.</td>
+                                    <td>0.50 руб.</td>
+                                    <td>0.50 руб.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Дом и быт</td>
+                                    <td>0.50 руб.</td>
+                                    <td>0.50 руб.</td>
+                                    <td>0.50 руб.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-ok"></span> Создать новую компанию</button>
+
+            </form>
+        </div>
+    </div>
+
+
+
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/knockout-3.2.0.js"></script>
+    <script src="scripts/bootstrap-select.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
