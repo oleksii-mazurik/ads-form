@@ -37,27 +37,42 @@
                                 </div>
                             </div>
                         </div>
-
-                        <span class="glyphicon glyphicon-chevron-up toggleFlag"></span> Какой-то блок
-                        <div class="toggle">
-                            Hello world;
-                        </div>
-                        <hr/>
                         <div class="form-group">
-                            <ul data-bind="foreach: geo">
-                                <li>
-                                    <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
-                                    <input type="checkbox" data-bind="checked: checked, click: $root.makeChildrenChecked.bind($data)">
-                                    <span data-bind="text: country"></span>
-                                    <ul class='toggle' data-bind="foreach: { data: regions, as: 'region' }">
-                                        <li>
-                                            <input type="checkbox" data-bind="checked: region.checked, click: $root.makeParentUnchecked.bind($data)">
-                                            <span data-bind="text: region.name"></span>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
+                            <input type="checkbox" data-bind="checked: geo.checked, event: { change: geo.setState.bind(geo) }">
+                            <span data-bind="text: geo.name"></span>
+                            <div class="toggle">
+                                <ul data-bind="foreach: geo.children">
+                                    <li>
+                                        <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
+                                        <input type="checkbox" data-bind="checked: checked, event: { change: setState }">
+                                        <span data-bind="text: name"></span>
+                                        <ul class='toggle' data-bind="foreach: { data: children, as: 'region' }">
+                                            <li>
+                                                <input type="checkbox" data-bind="checked: region.checked, event: { change: setState }">
+                                                <span data-bind="text: region.name"></span>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
+                        <!--<div class="form-group">-->
+                            <!--<ul data-bind="foreach: geo">-->
+                                <!--<li>-->
+                                    <!--<span class="glyphicon glyphicon-chevron-up toggleFlag"></span>-->
+                                    <!--<input type="checkbox" data-bind="checked: checked, click: $root.makeChildrenChecked.bind($data)">-->
+                                    <!--<span data-bind="text: country"></span>-->
+                                    <!--<ul class='toggle' data-bind="foreach: { data: regions, as: 'region' }">-->
+                                        <!--<li>-->
+                                            <!--<input type="checkbox" data-bind="checked: region.checked, click: $root.makeParentUnchecked.bind($data)">-->
+                                            <!--<span data-bind="text: region.name"></span>-->
+                                        <!--</li>-->
+                                    <!--</ul>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
                         <div class="form-group">
                             <label>Выберите пол:</label>
                             <div class="panel">

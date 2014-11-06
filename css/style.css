@@ -3,7 +3,7 @@
     margin: 10px;
 }
 
-input[type='text']{
+input[type='text'], input[type='num']{
     background: lightgray;
 }
 
@@ -17,4 +17,8 @@ input[type='checkbox']{
 
 ul {
     list-style: none;
+}
+
+.toggleFlag {
+    font-size: 10px;
 }
