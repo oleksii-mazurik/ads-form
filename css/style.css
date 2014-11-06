@@ -14,3 +14,7 @@ input[type='checkbox']{
 .content, .row {
     margin: 10px;
 }
+
+ul {
+    list-style: none;
+}

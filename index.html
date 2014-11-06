@@ -37,53 +37,26 @@
                                 </div>
                             </div>
                         </div>
+
+                        <span class="glyphicon glyphicon-chevron-up toggleFlag"></span> Какой-то блок
+                        <div class="toggle">
+                            Hello world;
+                        </div>
+                        <hr/>
                         <div class="form-group">
                             <ul data-bind="foreach: geo">
                                 <li>
-                                    <input type="checkbox" data-bind="checked: checked">
+                                    <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
+                                    <input type="checkbox" data-bind="checked: checked, click: $root.makeChildrenChecked.bind($data)">
                                     <span data-bind="text: country"></span>
-                                    <ul data-bind="foreach: { data: regions, as: 'region' }">
+                                    <ul class='toggle' data-bind="foreach: { data: regions, as: 'region' }">
                                         <li>
-                                            <input type="checkbox" data-bind="checked: region.checked">
+                                            <input type="checkbox" data-bind="checked: region.checked, click: $root.makeParentUnchecked.bind($data)">
                                             <span data-bind="text: region.name"></span>
                                         </li>
                                     </ul>
                                 </li>
                             </ul>
-                            <!--<ul>-->
-                                <!--<li>-->
-                                    <!--Все страны-->
-                                    <!--<ul>-->
-                                        <!--<li>-->
-                                            <!--Украина-->
-                                            <!--<ul>-->
-                                                <!--<li>Киевская обл.</li>-->
-                                                <!--<li>Львовская обл.</li>-->
-                                                <!--<li>Донецкая обл.</li>-->
-                                                <!--<li>Николаевская обл.</li>-->
-                                                <!--<li>Крым</li>-->
-                                            <!--</ul>-->
-                                        <!--</li>-->
-                                        <!--<li>-->
-                                            <!--Россия-->
-                                            <!--<ul>-->
-                                                <!--<li>Московская обл.</li>-->
-                                                <!--<li>Краснодарский край</li>-->
-                                                <!--<li>Камчатка</li>-->
-                                                <!--<li>Ленинградская обл.</li>-->
-                                            <!--</ul>-->
-                                        <!--</li>-->
-                                        <!--<li>-->
-                                            <!--Беларусь-->
-                                            <!--<ul>-->
-                                                <!--<li>Минск</li>-->
-                                                <!--<li>Гомель</li>-->
-                                                <!--<li>Брест</li>-->
-                                            <!--</ul>-->
-                                        <!--</li>-->
-                                    <!--</ul>-->
-                                <!--</li>-->
-                            <!--</ul>-->
                         </div>
                         <div class="form-group">
                             <label>Выберите пол:</label>
