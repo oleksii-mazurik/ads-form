@@ -1,7 +1,5 @@
 var Region = function Region(options) {
 
-    //var self = this;
-
     if(!options.name) {
         throw "There is no region name";
     }
@@ -15,22 +13,19 @@ var Region = function Region(options) {
     this.instanceOf = function() {
         return _instanceOf;
     };
-    //console.log(this.name);
-    //console.log(this.children);
+
 };
 
 Region.prototype.addChildren = function(kids){
     this.children = [];
     for (var i = 0; i < kids.length; i++) {
-        this.children.push(this.addChild(kids[i], this));
+        this.addChild(kids[i], this);
     }
     return this.children;
 };
 
 Region.prototype.setState = function setState(parentStatus) {
 
-
-    console.log(parentStatus);
     parentStatus.checked(!parentStatus.checked())
     function toChilds(status, node) {
         if (node.children) {
@@ -44,72 +39,34 @@ Region.prototype.setState = function setState(parentStatus) {
         else return;
     }
 
-    function toParents() {
-
+    function toParents(node) {
+        if (node.parent) {
+            var flag = true;
+            node.parent.children.forEach(function(child){
+                if (!child.checked()) {
+                    flag = false;
+                    return;
+                }
+            });
+            node.parent.checked(flag);
+            toParents(node.parent);
+        }
+        else {
+            return;
+        }
     }
-    //debugger;
     toChilds(parentStatus.checked(), parentStatus);
-
-    //var status = arguments.length > 1 ?  !this.checked() : parentStatus;
-    //this.children.forEach(function(child) {
-    //    if(child.instanceOf() == 'Region') {
-    //        child.setState(status);
-    //    }
-    //});
-    //
-    //this.checked(arguments.length > 1 ? status : parentStatus);
+    toParents(parentStatus);
 };
 
 Region.prototype.addChild = function addChild(child, parentNode) {
     if(child.instanceOf() == 'Region') {
         child.parent = parentNode;
-        //parentNode.children.push(child);
+        parentNode.children.push(child);
+
     }
-    //console.log(child);
     return child;
 };
-
-//Region.findParent = function(tree, node) {
-//    var parent = tree;
-//    var recursion = function recursion(tree, node) {
-//        if(tree == node) {
-//            return;
-//        }
-//
-//        var result = false;
-//        tree.children.forEach(function(item) {
-//            if(item == node) {
-//                result = true;
-//                parent = tree;
-//                return;
-//            }
-//
-//            recursion(item, node);
-//        });
-//    };
-//
-//    recursion(tree, node);
-//
-//    return parent;
-//};
-
-//Region.checkIfChildrenChecked = function(node) {
-//    var result = true;
-//
-//    var recursion = function(item) {
-//        item.children.forEach(function(child) {
-//            if(!child.checked()) {
-//                result = false;
-//                return;
-//            } else {
-//                recursion(child);
-//            }
-//        });
-//    };
-//
-//    recursion(node);
-//
-//};
 
 var viewModel = function() {
 
@@ -131,13 +88,24 @@ var viewModel = function() {
 
     self.returnSendForm = function() {
 
-        var tmp2 = [];
+
+        var categoriesCont = [];
+        var regionsCont = [];
 
         var categories = self.categories.categories;
+        var countries = self.geo.children;
+
+        for (var j = 0; j < countries.length; j++) {
+            countries[j].children.forEach(function(child){
+                if (child.checked()) {
+                    regionsCont.push(child.name);
+                }
+            })
+        }
 
         for (var i = 0; i < categories.length; i++) {
             if (categories[i].checked())
-                tmp2.push(categories[i].name);
+                categoriesCont.push(categories[i].name);
         }
 
         var sendForm = {
@@ -145,10 +113,11 @@ var viewModel = function() {
             url: self.companyURL(),
             adultContent: self.adultContent(),
             sex: self.sex(),
+            regions: regionsCont,
             sumBudget: self.sumBudget(),
             perDayBudget: self.perDayBudget(),
             subject: self.adsSubject(),
-            categories: tmp2
+            categories: categoriesCont
         };
 
 
@@ -271,6 +240,90 @@ var viewModel = function() {
                 minPrice: '0.50',
                 recommendedPrice: '0.50',
                 stablePrice:'0.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Новости и СМИ',
+                minPrice: '1.89',
+                recommendedPrice: '1.89',
+                stablePrice:'1.89'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Образование и работа',
+                minPrice: '0.50',
+                recommendedPrice: '0.50',
+                stablePrice:'0.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Политика',
+                minPrice: '1.50',
+                recommendedPrice: '1.50',
+                stablePrice:'1.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Знакомства',
+                minPrice: '0.50',
+                recommendedPrice: '0.50',
+                stablePrice:'0.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Развлечения и досуг',
+                minPrice: '1.89',
+                recommendedPrice: '1.89',
+                stablePrice:'1.89'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Спорт',
+                minPrice: '0.50',
+                recommendedPrice: '0.50',
+                stablePrice:'0.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Техника и аксессуары',
+                minPrice: '1.50',
+                recommendedPrice: '1.50',
+                stablePrice:'1.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Туризм и путешествия',
+                minPrice: '0.50',
+                recommendedPrice: '0.50',
+                stablePrice:'0.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Азартные игры',
+                minPrice: '1.89',
+                recommendedPrice: '1.89',
+                stablePrice:'1.89'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Игры',
+                minPrice: '0.50',
+                recommendedPrice: '0.50',
+                stablePrice:'0.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Прочее',
+                minPrice: '1.50',
+                recommendedPrice: '1.50',
+                stablePrice:'1.50'
+            },
+            {
+                checked: ko.observable(false),
+                name: 'Для взрослых',
+                minPrice: '0.50',
+                recommendedPrice: '0.50',
+                stablePrice:'0.50'
             }
         ]
     };
@@ -301,15 +354,16 @@ var viewModel = function() {
 ko.applyBindings(new viewModel());
 
 
+
+
 $(document).ready(function(){
     $('.toggleFlag').click(function(){
-        if ($(this).hasClass('glyphicon-chevron-up')) {
-            $(this).removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        if ($(this).hasClass('glyphicon-chevron-down')) {
+            $(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
         }
         else {
-            $(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            $(this).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
         }
-        //console.log($(this).('.toggleFlag + .toggle'));
         $(this).nextAll().last().slideToggle();
     });
 

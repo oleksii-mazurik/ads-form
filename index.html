@@ -15,12 +15,12 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label" for="name">  Введите название компании:</label>
-                            <input class="form-control" type="text" maxlength="30" id="name" data-bind="value: companyName, valueUpdate: 'afterkeydown'">
+                            <input class="form-control" type="text" maxlength="30" id="name" data-bind="value: companyName, valueUpdate: 'afterkeydown'" required="">
                             <p class="hint">Осталось: <span data-bind="text: remained"></span> символов</p>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="site-name">Введите адрес рекламируемого сайта:</label>
-                            <input class="form-control" type="text" id="site-name" data-bind="value: companyURL, valueUpdate: 'afterkeydown'">
+                            <input class="form-control" type="text" id="site-name" data-bind="value: companyURL, valueUpdate: 'afterkeydown'" required="">
                         </div>
                         <div class="form-group">
                             <label>Планируете ли вы использовать контент "для взрослых"?</label>
@@ -37,18 +37,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" data-bind="with: geo">
                             <label class="control-label">География </label>
-                            <span class="glyphicon-chevron-up glyphicon toggleFlag"></span>
+                            <span class="glyphicon-chevron-down glyphicon toggleFlag"></span>
                             <p class="hint">Выбор страны и города для показа обьявления</p>
                             <div class="toggle">
-                                <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
-                                <input type="checkbox" data-bind="checked: geo.checked, event: { change: geo.setState.bind(geo) }">
-                                <span data-bind="text: geo.name"></span>
+                                <span class="glyphicon glyphicon-chevron-down toggleFlag"></span>
+                                <input type="checkbox" data-bind="checked: checked, event: { change: setState.bind(this) }">
+                                <span data-bind="text: name"></span>
                                 <div class="toggle">
-                                    <ul data-bind="foreach: geo.children">
+                                    <ul data-bind="foreach: children">
                                         <li>
-                                            <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
+                                            <span class="glyphicon glyphicon-chevron-down toggleFlag"></span>
                                             <input type="checkbox" data-bind="checked: checked, event: { change: setState.bind(this) }">
                                             <span data-bind="text: name"></span>
                                             <ul class='toggle' data-bind="foreach: { data: children, as: 'region' }">
@@ -66,7 +66,7 @@
 
                         <div class="form-group">
                             <label class="control-label">Демография </label>
-                            <span class="glyphicon-chevron-up glyphicon toggleFlag"></span>
+                            <span class="glyphicon-chevron-down glyphicon toggleFlag"></span>
                             <p class="hint">Выбор пола, возраста</p>
                             <div class="toggle">
                                 <label>Выберите пол:</label>
@@ -92,16 +92,16 @@
 
                         <div class="form-group">
                             <label class="control-label">Планирование бюджета компании </label>
-                            <span class="glyphicon-chevron-up glyphicon toggleFlag"></span>
+                            <span class="glyphicon-chevron-down glyphicon toggleFlag"></span>
                             <p class="hint">Настройка лимитов компании</p>
                             <div class="toggle">
                                 <div class="form-group">
                                     <label>Установите суммарный бюджет рекламной компании:</label>
-                                    <input type="text" class="form-control" data-bind="value: sumBudget, valueUpdate: 'afterkeydown'">
+                                    <input type="text" class="form-control" data-bind="value: sumBudget, valueUpdate: 'afterkeydown'" required="">
                                 </div>
                                 <div class="form-group">
                                     <label>Установите дневной бюджет рекламной компании</label>
-                                    <input type="text" class="form-control" data-bind="value: perDayBudget, valueUpdate: 'afterkeydown'">
+                                    <input type="text" class="form-control" data-bind="value: perDayBudget, valueUpdate: 'afterkeydown'" required="">
                                 </div>
                             </div>
                         </div>
