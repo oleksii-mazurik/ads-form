@@ -1,6 +1,6 @@
 var Region = function Region(options) {
 
-    var self = this;
+    //var self = this;
 
     if(!options.name) {
         throw "There is no region name";
@@ -8,7 +8,6 @@ var Region = function Region(options) {
 
     this.name     = options.name;
     this.checked  = ko.observable(options.checked || false);
-    //this.children = this.addChildren(options.children) || [];
     this.children = options.children ? this.addChildren(options.children) : [];
     this.parent   = null;
 
@@ -21,19 +20,15 @@ var Region = function Region(options) {
 };
 
 Region.prototype.addChildren = function(kids){
-    //console.log(this)
     this.children = [];
     for (var i = 0; i < kids.length; i++) {
-        //console.log(this.addChild(kids[i], this));
         this.children.push(this.addChild(kids[i], this));
     }
-
     return this.children;
 };
 
 Region.prototype.setState = function setState(parentStatus) {
     var status = arguments.length > 1 ?  !this.checked() : parentStatus;
-
     this.children.forEach(function(child) {
         if(child.instanceOf() == 'Region') {
             child.setState(status);
