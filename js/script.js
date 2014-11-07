@@ -16,16 +16,19 @@ var Region = function Region(options) {
     this.instanceOf = function() {
         return _instanceOf;
     };
+    console.log(this.name);
+    console.log(this.children);
 };
 
 Region.prototype.addChildren = function(kids){
+    //console.log(this)
     this.children = [];
-    console.log(kids.length);
-    //debugger;
     for (var i = 0; i < kids.length; i++) {
-        this.addChild(kids[i], this);
+        //console.log(this.addChild(kids[i], this));
+        this.children.push(this.addChild(kids[i], this));
     }
-    return this;
+
+    return this.children;
 };
 
 Region.prototype.setState = function setState(parentStatus) {
@@ -41,14 +44,12 @@ Region.prototype.setState = function setState(parentStatus) {
 };
 
 Region.prototype.addChild = function addChild(child, parentNode) {
-    //debugger;
-    console.log(child);
     if(child.instanceOf() == 'Region') {
         child.parent = parentNode;
-        parentNode.children.push(child);
+        //parentNode.children.push(child);
     }
-    console.log(child);
-    return this;
+    //console.log(child);
+    return child;
 };
 
 //Region.findParent = function(tree, node) {
@@ -159,6 +160,8 @@ var viewModel = function() {
             })
         ]
     });
+
+    //console.log(self.geo.children.length);
 
     //self.geo.setChecked();
 
