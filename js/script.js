@@ -6,48 +6,52 @@ var viewModel = function() {
     self.companyURL     = ko.observable('');
     self.adultContent   = ko.observable('false');
 
-    self.adultContent.subscribe(function(newValue){
-        console.log(newValue);
-    });
 
+    self.changeCountries = function() {
+        var geography = self.geo;
+        //geography.checked(!geography.checked());
 
-    self.Ukraine        = ko.observable(false);
-    self.Russia         = ko.observable(false);
-    self.Belarus        = ko.observable(false);
-
-
-    self.makeChildrenChecked = function(data){
-        console.log(data.regions());
-        for (var i = 0; i < data.regions().length; i++) {
-            data.regions()[i].checked(!data.regions()[i].checked());
+        for (var i = 0; i < geography.countries.length; i++) {
+            geography.countries[i].checked(geography.checked());
+            self.makeChildrenChecked(geography.countries[i]);
         }
-        return true
+
+        return true;
     };
 
-    self.makeParentUnchecked = function(data) {
-        var region = self.geo()[findIndex(data)];
-        if (!data.checked()) {
-            region.checked(false);
+    self.makeChildrenChecked = function(data){
+
+        //data.checked(!data.checked());
+        var flag = checked
+        for (var i = 0; i < data.regions.length; i++) {
+            data.regions[i].checked(data.checked());
         }
-        else {
-            var flag = true;
-            for (var i = 0; i < region.regions().length; i++) {
-                if (!region.regions()[i].checked()) flag = false;
-            }
-            region.checked(flag);
+        return true;
+    };
+
+    self.makeParentUnchecked = function(data, event) {
+        //data.checked(!data.checked());
+
+        var region = self.geo.countries[findIndex(data)];
+
+        var flag = true;
+        for (var i = 0; i < region.regions.length; i++) {
+            if (!region.regions[i].checked()) flag = false;
         }
+        region.checked(flag);
+
         return true;
     };
 
 
     function findIndex(obj) {
 
-        var geography = self.geo();
+        var geography = self.geo.countries;
         var index = -1;
 
         for (var i = 0; i < geography.length; i++) {
-            for (var j = 0; j < geography[i].regions().length; j++) {
-                if (geography[i].regions()[j].name == obj.name) {
+            for (var j = 0; j < geography[i].regions.length; j++) {
+                if (geography[i].regions[j].name == obj.name) {
                     index = i;
                 }
             }
@@ -57,36 +61,30 @@ var viewModel = function() {
     }
 
 
-    self.geo = ko.observableArray([
-
-        { checked: ko.observable(false), country: 'Украина', regions: ko.observableArray([
-            { checked: ko.observable(false), name: "Киевская обл." },
-            { checked: ko.observable(false), name: "Львовская обл." },
-            { checked: ko.observable(false), name: "Донецкая обл." },
-            { checked: ko.observable(false), name: "Николаевская обл." },
-            { checked: ko.observable(false), name: "Крым" }
-        ]) },
-        { checked: ko.observable(false), country: 'Россия', regions: ko.observableArray([
-            { checked: ko.observable(false), name: "Московская обл." },
-            { checked: ko.observable(false), name: "Краснодарский край" },
-            { checked: ko.observable(false), name: "Камчатка" },
-            { checked: ko.observable(false), name: "Ленинградская обл." }
-        ]) },
-        { checked: ko.observable(false), country: 'Беларусь', regions: ko.observableArray([
-            { checked: ko.observable(false), name: "Минск" },
-            { checked: ko.observable(false), name: "Гомель" },
-            { checked: ko.observable(false), name: "Брест" }
-        ]) }
-
-    ]);
-
-
-    function makeChildrenChecked() {
-        console.log('LALALA');
-        //console.log();
-        return true;
-        //console.log(self.geo());
-    }
+    self.geo = {
+        checked: ko.observable(false),
+        name: 'Все страны',
+        countries: [
+            { checked: ko.observable(false), country: 'Украина', regions: [
+                { checked: ko.observable(false), name: "Киевская обл." },
+                { checked: ko.observable(false), name: "Львовская обл." },
+                { checked: ko.observable(false), name: "Донецкая обл." },
+                { checked: ko.observable(false), name: "Николаевская обл." },
+                { checked: ko.observable(false), name: "Крым" }
+            ] },
+            { checked: ko.observable(false), country: 'Россия', regions: [
+                { checked: ko.observable(false), name: "Московская обл." },
+                { checked: ko.observable(false), name: "Краснодарский край" },
+                { checked: ko.observable(false), name: "Камчатка" },
+                { checked: ko.observable(false), name: "Ленинградская обл." }
+            ] },
+            { checked: ko.observable(false), country: 'Беларусь', regions: [
+                { checked: ko.observable(false), name: "Минск" },
+                { checked: ko.observable(false), name: "Гомель" },
+                { checked: ko.observable(false), name: "Брест" }
+            ] }
+        ]
+    };
 
 };
 

@@ -38,13 +38,11 @@
                             </div>
                         </div>
 
-                        <span class="glyphicon glyphicon-chevron-up toggleFlag"></span> Какой-то блок
-                        <div class="toggle">
-                            Hello world;
-                        </div>
-                        <hr/>
                         <div class="form-group">
-                            <ul data-bind="foreach: geo">
+                            <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
+                            <input type="checkbox" data-bind="checked: geo.checked, click: changeCountries.bind(geo)">
+                            <span data-bind="text: geo.name"></span>
+                            <ul data-bind="foreach: geo.countries">
                                 <li>
                                     <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
                                     <input type="checkbox" data-bind="checked: checked, click: $root.makeChildrenChecked.bind($data)">
@@ -58,6 +56,7 @@
                                 </li>
                             </ul>
                         </div>
+
                         <div class="form-group">
                             <label>Выберите пол:</label>
                             <div class="panel">
