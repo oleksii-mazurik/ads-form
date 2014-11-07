@@ -3,20 +3,21 @@
     margin: 10px;
 }
 
-input[type='text'], input[type='num']{
-    background: lightgray;
+input[type='text'], input[type='url'], input[type='number']{
+    background: #efefef;
 }
 
-input[type='checkbox']{
-    background: orange;
-}
 
 .content, .row {
     margin: 10px;
 }
 
-ul {
+.form-group ul {
     list-style: none;
+}
+
+.form-group li li {
+    padding-left: 30px;
 }
 
 .toggleFlag {
@@ -29,9 +30,12 @@ ul {
     margin: 0;
     padding: 0;
 }
-.control-label {
-    margin: 0;
-    padding: 0;
+
+.adsForm {
+    border: 2px solid black;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 10px;
 }
 
 .toggle {

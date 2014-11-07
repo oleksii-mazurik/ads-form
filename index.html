@@ -9,8 +9,8 @@
 </head>
 <body>
     <div class="content">
-        <div class="col-md-offset-2 col-md-8">
-            <form data-bind="submit: returnSendForm">
+        <div class="col-md-offset-1 col-md-10">
+            <form data-bind="submit: returnSendForm" class="adsForm">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -97,11 +97,11 @@
                             <div class="toggle">
                                 <div class="form-group">
                                     <label>Установите суммарный бюджет рекламной компании:</label>
-                                    <input type="text" class="form-control" data-bind="value: sumBudget, valueUpdate: 'afterkeydown'" required="">
+                                    <input type="number" class="form-control" data-bind="value: sumBudget, valueUpdate: 'afterkeydown'" required="">
                                 </div>
                                 <div class="form-group">
                                     <label>Установите дневной бюджет рекламной компании</label>
-                                    <input type="text" class="form-control" data-bind="value: perDayBudget, valueUpdate: 'afterkeydown'" required="">
+                                    <input type="number" class="form-control" data-bind="value: perDayBudget, valueUpdate: 'afterkeydown'" required="">
                                 </div>
                             </div>
                         </div>
