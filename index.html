@@ -8,19 +8,19 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     <div class="content">
         <div class="col-md-offset-2 col-md-8">
-            <form>
+            <form data-bind="submit: returnSendForm">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label" for="name">  Введите название компании:</label>
-                            <input class="form-control" type="text" id="name">
+                            <input class="form-control" type="text" maxlength="30" id="name" data-bind="value: companyName, valueUpdate: 'afterkeydown'">
+                            <p class="hint">Осталось: <span data-bind="text: remained"></span> символов</p>
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="site-name">Введите адрес рекламируемого сайта:</label>
-                            <input class="form-control" type="text" id="site-name">
+                            <input class="form-control" type="text" id="site-name" data-bind="value: companyURL, valueUpdate: 'afterkeydown'">
                         </div>
                         <div class="form-group">
                             <label>Планируете ли вы использовать контент "для взрослых"?</label>
@@ -38,118 +38,105 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
-                            <input type="checkbox" data-bind="checked: geo.checked, event: { change: geo.setState.bind(geo) }">
-                            <!--<input type="checkbox" data-bind="checked: geo.checked">-->
-                            <span data-bind="text: geo.name"></span>
+                            <label class="control-label">География </label>
+                            <span class="glyphicon-chevron-up glyphicon toggleFlag"></span>
+                            <p class="hint">Выбор страны и города для показа обьявления</p>
                             <div class="toggle">
-                                <ul data-bind="foreach: geo.children">
-                                    <li>
-                                        <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
-                                        <input type="checkbox" data-bind="checked: checked, event: { change: setState }">
-                                        <!--<input type="checkbox" data-bind="checked: checked">-->
-                                        <span data-bind="text: name"></span>
-                                        <ul class='toggle' data-bind="foreach: { data: children, as: 'region' }">
-                                            <li>
-                                                <!--<input type="checkbox" data-bind="checked: region.checked">-->
-                                                <input type="checkbox" data-bind="checked: region.checked, event: { change: setState }">
-                                                <span data-bind="text: region.name"></span>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                                <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
+                                <input type="checkbox" data-bind="checked: geo.checked, event: { change: geo.setState.bind(geo) }">
+                                <span data-bind="text: geo.name"></span>
+                                <div class="toggle">
+                                    <ul data-bind="foreach: geo.children">
+                                        <li>
+                                            <span class="glyphicon glyphicon-chevron-up toggleFlag"></span>
+                                            <input type="checkbox" data-bind="checked: checked, event: { change: setState.bind(this) }">
+                                            <span data-bind="text: name"></span>
+                                            <ul class='toggle' data-bind="foreach: { data: children, as: 'region' }">
+                                                <li>
+                                                    <input type="checkbox" data-bind="checked: region.checked, event: { change: setState.bind(this) }">
+                                                    <span data-bind="text: region.name"></span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
 
+                            </div>
                         </div>
-                        <!--<div class="form-group">-->
-                            <!--<ul data-bind="foreach: geo">-->
-                                <!--<li>-->
-                                    <!--<span class="glyphicon glyphicon-chevron-up toggleFlag"></span>-->
-                                    <!--<input type="checkbox" data-bind="checked: checked, click: $root.makeChildrenChecked.bind($data)">-->
-                                    <!--<span data-bind="text: country"></span>-->
-                                    <!--<ul class='toggle' data-bind="foreach: { data: regions, as: 'region' }">-->
-                                        <!--<li>-->
-                                            <!--<input type="checkbox" data-bind="checked: region.checked, click: $root.makeParentUnchecked.bind($data)">-->
-                                            <!--<span data-bind="text: region.name"></span>-->
-                                        <!--</li>-->
-                                    <!--</ul>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
+
                         <div class="form-group">
-                            <label>Выберите пол:</label>
-                            <div class="panel">
-                                <div class="radio">
-                                    <label>
-                                        <input id="any" name="radioSex" value="any" type="radio" checked>
-                                        Любой</label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input id="male" name="radioSex" value="male" type="radio">
-                                        Мужской</label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input id="female" name="radioSex" value="female" type="radio">
-                                        Женский</label>
+                            <label class="control-label">Демография </label>
+                            <span class="glyphicon-chevron-up glyphicon toggleFlag"></span>
+                            <p class="hint">Выбор пола, возраста</p>
+                            <div class="toggle">
+                                <label>Выберите пол:</label>
+                                <div class="panel">
+                                    <div class="radio">
+                                        <label>
+                                            <input id="any" name="radioSex" value="any" type="radio" data-bind="checked: sex" checked>
+                                            Любой</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input id="male" name="radioSex" value="male" data-bind="checked: sex" type="radio">
+                                            Мужской</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input id="female" name="radioSex" value="female" data-bind="checked: sex" type="radio">
+                                            Женский</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <label>Установите суммарный бюджет рекламной компании:</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div>
-                            <label>Установите дневной бюджет рекламной компании</label>
-                            <input type="text" class="form-control">
+
+                        <div class="form-group">
+                            <label class="control-label">Планирование бюджета компании </label>
+                            <span class="glyphicon-chevron-up glyphicon toggleFlag"></span>
+                            <p class="hint">Настройка лимитов компании</p>
+                            <div class="toggle">
+                                <div class="form-group">
+                                    <label>Установите суммарный бюджет рекламной компании:</label>
+                                    <input type="text" class="form-control" data-bind="value: sumBudget, valueUpdate: 'afterkeydown'">
+                                </div>
+                                <div class="form-group">
+                                    <label>Установите дневной бюджет рекламной компании</label>
+                                    <input type="text" class="form-control" data-bind="value: perDayBudget, valueUpdate: 'afterkeydown'">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Выберите тематику Вашей рекламной компании:</label> <br/>
-                            <select class="selectpicker">
-                                <option>Недвижимость</option>
-                                <option>Компьютерные игры</option>
-                                <option>Культура и искусство</option>
-                                <option>Мода и стиль</option>
-                                <option>Политика</option>
+                            <select class="selectpicker" data-bind="value: adsSubject">
+                                <option value="Недвижимость">Недвижимость</option>
+                                <option value="Компьютерные игры">Компьютерные игры</option>
+                                <option value="Кульутра и искусство">Культура и искусство</option>
+                                <option value="Мода и стиль">Мода и стиль</option>
+                                <option value="Политика">Политика</option>
                             </select>
                         </div>
                         <div>
                             <label>Выберите категории сайтов для показа ваших обновлений:</label>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered categoriesTable">
                                 <thead>
                                 <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>Категория</td>
-                                    <td>Минимальн. Цена</td>
-                                    <td>Рекомендов. Цена</td>
-                                    <td>Установлен. Цена</td>
+                                    <td><input type="checkbox" data-bind="checked: categories.checked, click: changeChildren"></td>
+                                    <td><span data-bind="text: categories.name"></span></td>
+                                    <td><span data-bind="text: categories.minPrice"></span></td>
+                                    <td><span data-bind="text: categories.recommendedPrice"></span></td>
+                                    <td><span data-bind="text: categories.stablePrice"></span></td>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>Авто/Мото</td>
-                                    <td>0.50 руб.</td>
-                                    <td>0.50 руб.</td>
-                                    <td>0.50 руб.</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>Бизнес и финансы</td>
-                                    <td>0.50 руб.</td>
-                                    <td>0.50 руб.</td>
-                                    <td>0.50 руб.</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>Дом и быт</td>
-                                    <td>0.50 руб.</td>
-                                    <td>0.50 руб.</td>
-                                    <td>0.50 руб.</td>
-                                </tr>
+                                <tbody data-bind="foreach: categories.categories">
+                                    <tr data-bind="css : { active: $data.checked() }">
+                                        <td><input data-bind="checked: $data.checked, click: $root.changeParent" type="checkbox"></td>
+                                        <td><span data-bind="text: $data.name"></span></td>
+                                        <td class="text-center"><span><span data-bind="text: $data.minPrice"></span> руб.</span></td>
+                                        <td class="text-center"><span><span data-bind="text: $data.recommendedPrice"></span> руб.</span></td>
+                                        <td class="text-center"><span><span data-bind="text: $data.stablePrice"></span> руб.</span></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -162,6 +149,10 @@
         </div>
     </div>
 
+
+    <div>
+        <span></span>
+    </div>
 
 
     <script src="scripts/jquery.js"></script>

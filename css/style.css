@@ -22,3 +22,29 @@ ul {
 .toggleFlag {
     font-size: 10px;
 }
+
+.hint {
+    color: gray;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.control-label {
+    margin: 0;
+    padding: 0;
+}
+
+.toggle {
+    padding: 5px;
+}
+
+.active {
+    background: lightgray;
+}
+
+.categoriesTable thead {
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: center;
+}
+
