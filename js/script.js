@@ -1,4 +1,5 @@
 var Region = function Region(options) {
+
     var self = this;
 
     if(!options.name) {
@@ -7,13 +8,24 @@ var Region = function Region(options) {
 
     this.name     = options.name;
     this.checked  = ko.observable(options.checked || false);
-    this.children = options.children || [];
+    //this.children = this.addChildren(options.children) || [];
+    this.children = options.children ? this.addChildren(options.children) : [];
     this.parent   = null;
 
     var _instanceOf = 'Region';
     this.instanceOf = function() {
         return _instanceOf;
     };
+};
+
+Region.prototype.addChildren = function(kids){
+    this.children = [];
+    console.log(kids.length);
+    //debugger;
+    for (var i = 0; i < kids.length; i++) {
+        this.addChild(kids[i], this);
+    }
+    return this;
 };
 
 Region.prototype.setState = function setState(parentStatus) {
@@ -28,36 +40,40 @@ Region.prototype.setState = function setState(parentStatus) {
     this.checked(arguments.length > 1 ? status : parentStatus);
 };
 
-Region.prototype.addChild = function addChild(child) {
+Region.prototype.addChild = function addChild(child, parentNode) {
+    //debugger;
+    console.log(child);
     if(child.instanceOf() == 'Region') {
-        child.parent = this;
-        this.children.push(child);
+        child.parent = parentNode;
+        parentNode.children.push(child);
     }
+    console.log(child);
+    return this;
 };
 
-Region.findParent = function(tree, node) {
-    var parent = tree;
-    var recursion = function recursion(tree, node) {
-        if(tree == node) {
-            return;
-        }
-
-        var result = false;
-        tree.children.forEach(function(item) {
-            if(item == node) {
-                result = true;
-                parent = tree;
-                return;
-            }
-
-            recursion(item, node);
-        });
-    };
-
-    recursion(tree, node);
-
-    return parent;
-};
+//Region.findParent = function(tree, node) {
+//    var parent = tree;
+//    var recursion = function recursion(tree, node) {
+//        if(tree == node) {
+//            return;
+//        }
+//
+//        var result = false;
+//        tree.children.forEach(function(item) {
+//            if(item == node) {
+//                result = true;
+//                parent = tree;
+//                return;
+//            }
+//
+//            recursion(item, node);
+//        });
+//    };
+//
+//    recursion(tree, node);
+//
+//    return parent;
+//};
 
 Region.checkIfChildrenChecked = function(node) {
     var result = true;
@@ -85,84 +101,7 @@ var viewModel = function() {
     self.companyURL     = ko.observable('');
     self.adultContent   = ko.observable('false');
 
-    self.adultContent.subscribe(function(newValue){
-        console.log(newValue);
-    });
 
-
-    self.Ukraine        = ko.observable(false);
-    self.Russia         = ko.observable(false);
-    self.Belarus        = ko.observable(false);
-
-
-    self.makeChildrenChecked = function(data){
-        console.log(data.regions);
-        for (var i = 0; i < data.regions.length; i++) {
-            data.regions[i].checked(!data.regions[i].checked());
-        }
-        return true
-    };
-
-    self.makeParentUnchecked = function(data) {
-        var region = self.geo.countries[findIndex(data)];
-
-        console.log(region);
-        if (!data.checked()) {
-            region.checked(false);
-        }
-        else {
-            var flag = true;
-            for (var i = 0; i < region.regions.length; i++) {
-                if (!region.regions[i].checked()) flag = false;
-            }
-            region.checked(flag);
-        }
-        return true;
-    };
-
-
-    function findIndex(obj) {
-
-        var geography = self.geo.countries;
-        var index = -1;
-
-        for (var i = 0; i < geography.length; i++) {
-            for (var j = 0; j < geography[i].regions.length; j++) {
-                if (geography[i].regions[j].name == obj.name) {
-                    index = i;
-                }
-            }
-        }
-
-        return index;
-    }
-
-
-    //self.geo = {
-    //    checked: ko.observable(false),
-    //    name: 'Все страны',
-    //    countries: [
-    //        { checked: ko.observable(false), country: 'Украина', regions: [
-    //            { checked: ko.observable(false), name: "Киевская обл." },
-    //            { checked: ko.observable(false), name: "Львовская обл." },
-    //            { checked: ko.observable(false), name: "Донецкая обл." },
-    //            { checked: ko.observable(false), name: "Николаевская обл." },
-    //            { checked: ko.observable(false), name: "Крым" }
-    //        ] },
-    //        { checked: ko.observable(false), country: 'Россия', regions: [
-    //            { checked: ko.observable(false), name: "Московская обл." },
-    //            { checked: ko.observable(false), name: "Краснодарский край" },
-    //            { checked: ko.observable(false), name: "Камчатка" },
-    //            { checked: ko.observable(false), name: "Ленинградская обл." }
-    //        ] },
-    //        { checked: ko.observable(false), country: 'Беларусь', regions: [
-    //            { checked: ko.observable(false), name: "Минск" },
-    //            { checked: ko.observable(false), name: "Гомель" },
-    //            { checked: ko.observable(false), name: "Брест" }
-    //        ] }
-    //
-    //    ]
-    //};
 
     self.geo = new Region({
         name: 'Все страны',
